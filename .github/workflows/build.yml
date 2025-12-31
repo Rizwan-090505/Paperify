@@ -21,7 +21,7 @@ jobs:
       run: |
         pip install pyinstaller
         # If you have other requirements, uncomment the next line:
-        # pip install -r requirements.txt
+         pip install -r requirements.txt
 
     - name: Build EXE
       # Note: We use ';' here because this runs on a Windows server
