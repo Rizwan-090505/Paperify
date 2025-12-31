@@ -1,0 +1,35 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11' 
+
+    - name: Install Dependencies
+      run: |
+        pip install pyinstaller
+        # If you have other requirements, uncomment the next line:
+        # pip install -r requirements.txt
+
+    - name: Build EXE
+      # Note: We use ';' here because this runs on a Windows server
+      run: |
+        pyinstaller --noconfirm --onefile --windowed --add-data "Paperify/JNN.ttf;." Paperify/main.py
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Windows-App
+        path: dist/*.exe
